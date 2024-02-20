@@ -11,7 +11,7 @@ void Logic::calculate()
 {
 	reset();
 
-	//считать данные с первой базы данных
+	//read data from the first database
 	DataBase::openDataBase(db, _name_db1, _name_tb1, data);
 
 	for (auto& elem : data) {
@@ -22,7 +22,7 @@ void Logic::calculate()
 
 	reset();
 
-	//считать данные с второй базы данных
+	//read data from the second database
 	DataBase::openDataBase(db, _name_db2, _name_tb2, data);
 
 	for (auto& elem : data) {
@@ -30,7 +30,7 @@ void Logic::calculate()
 	}
 	cout << endl;
 
-	//размер первой базы данных меньше размера второй
+	//size first database < size second database
 	if (_hashmap1.size() < _hashmap2.size()) {
 		for (size_t i = 0; i < _hashmap2.size(); i++) {
 
@@ -40,7 +40,7 @@ void Logic::calculate()
 		}
 	}
 
-	//размер первой базы данных больше размера второй
+	//size first database > size second database
 	if (_hashmap1.size() > _hashmap2.size()) {
 		for (size_t i = 0; i < _hashmap1.size(); i++) {
 
@@ -50,7 +50,7 @@ void Logic::calculate()
 		}
 	}
 
-	//размер баз данных одинаковый (не имеет значения, в каком порядке сравнивать)
+	//size first database = size second database
 	if (_hashmap1.size() == _hashmap2.size()) {
 		for (size_t i = 0; i < _hashmap1.size(); i++) {
 
@@ -62,7 +62,7 @@ void Logic::calculate()
 	
 }
 
-//простая хеш-функция
+//simple hash function
 int64_t Logic::hashFunc(string& s)
 {
 	int64_t hash = 0;
@@ -81,7 +81,7 @@ void Logic::reset()
 	data.clear();
 }
 
-//интерполяционный поиск (работает с отсортированными данными)
+//interpolation search (works with sorted data)
 size_t Logic::interpolationSearch(int64_t toFind)
 {
 	size_t mid = 0;
@@ -111,6 +111,7 @@ size_t Logic::interpolationSearch(int64_t toFind)
 	return 1;
 }
 
+//simple search
 size_t Logic::Search(int64_t toFind, vector<int64_t> data)
 {
 
