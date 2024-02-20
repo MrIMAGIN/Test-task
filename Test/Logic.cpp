@@ -11,6 +11,7 @@ void Logic::calculate()
 {
 	reset();
 
+	//считать данные с первой базы данных
 	DataBase::openDataBase(db, _name_db1, _name_tb1, data);
 
 	for (auto& elem : data) {
@@ -21,6 +22,7 @@ void Logic::calculate()
 
 	reset();
 
+	//считать данные с второй базы данных
 	DataBase::openDataBase(db, _name_db2, _name_tb2, data);
 
 	for (auto& elem : data) {
@@ -28,35 +30,39 @@ void Logic::calculate()
 	}
 	cout << endl;
 
+	//размер первой базы данных меньше размера второй
 	if (_hashmap1.size() < _hashmap2.size()) {
 		for (size_t i = 0; i < _hashmap2.size(); i++) {
 
 			if (Search(_hashmap2[i], _hashmap1)) {
-				cout << "In db1 not Found - id: " << i + 1 << endl;
+				cout << "In db1 not Found - id row: " << i + 1 << endl;
 			}
 		}
 	}
 
+	//размер первой базы данных больше размера второй
 	if (_hashmap1.size() > _hashmap2.size()) {
 		for (size_t i = 0; i < _hashmap1.size(); i++) {
 
 			if (Search(_hashmap1[i], _hashmap2)) {
-				cout << "In db2 not Found - id: " << i + 1 << endl;
+				cout << "In db2 not Found - id row: " << i + 1 << endl;
 			}
 		}
 	}
 
+	//размер баз данных одинаковый (не имеет значения, в каком порядке сравнивать)
 	if (_hashmap1.size() == _hashmap2.size()) {
 		for (size_t i = 0; i < _hashmap1.size(); i++) {
 
 			if (Search(_hashmap1[i], _hashmap2)) {
-				cout << "In db2 not Found - id: " << i + 1 << endl;
+				cout << "In db2 not Found - id row: " << i + 1 << endl;
 			}
 		}
 	}
 	
 }
 
+//простая хеш-функция
 int64_t Logic::hashFunc(string& s)
 {
 	int64_t hash = 0;
@@ -75,6 +81,7 @@ void Logic::reset()
 	data.clear();
 }
 
+//интерполяционный поиск (работает с отсортированными данными)
 size_t Logic::interpolationSearch(int64_t toFind)
 {
 	size_t mid = 0;
